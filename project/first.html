@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>포토플리오 사이트</title>
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<link rel="stylesheet" href="css/firs.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
+<script>
+    $(document).ready(function(){
+        $("#header_img").bxSlider({
+            mode: 'horizontal',
+            speed: 500,
+            moveSlides: 1,
+            auto: true
+        });
+    });
+    $(document).ready(function(){
+        $("[value='main']").mouseover(function(){
+            $("[value='sub']").slideToggle(200);
+        });
+    });
+    $(document).ready(function(){
+        var banner = $("#best_product").find("tr");
+        var rollingId;
+
+        rollingId = setInterval(function(){
+            rollingStart();
+        }, 1000);
+    function rollingStart(){
+        banner.animate(3000, function(){
+            $(this).append("<td>" + $(this).find("td:first").html() + "</td>");
+            $(this).find("td:first").remove();
+            $(this).css("left",0);
+        });
+    }
+    });
+    $(document).ready(function(){
+        $(window).scroll(function(){
+            $("[value='new']").each(function(){
+                var bottom_of_element = $(this).offset().top + $(this).outerHeight();
+                var bottom_of_window = $(window).scrollTop() + $(window).height();
+
+                if( bottom_of_window > bottom_of_element ){
+                $(this).animate({'opacity':'1'},700);
+                }
+            });
+        });
+    });
+    $(document).ready(function(){
+        $('.more_view').click(function(){
+            var content = "";
+            var length = list.length;
+            $.ajax({
+                url: "",
+                data: "",
+                dataType: "", 
+                success:function(r){
+                    var tag ="";
+                    for(i=0; i<list.length; i++){
+                        tag += "<tr>";
+                        tag += "<td>"+r[i].data+"/<td>";
+                        tag += "</tr>";
+                    }
+                    $('#new_product').html(tag);
+                }
+            });
+        });
+    });
+    $(document).ready(function(){
+        $(window).scroll(function(){
+            if($(this).scrollTop() > 200){
+                $('#up').fadeIn();
+            }else{
+                $('#up').fadeOut();
+            }
+        });
+        $('#up').click(function(){
+            $('html, body').animate({scrollTop : 0},700);
+            return false;
+        });
+    });
+</script>
+<body>
+    <div class="main_container">
+        <div class="header">
+            <div id="top_header">
+                <div id="search_box">
+                    <input type="text" name="search" id="search" placeholder="검색어를 입력해주세요">
+                    <a href="#"><img src="img/search_icon.png" alt="#" id="search_icon"></a>
+                </div>
+                <div id="login">
+                    <span>로그인</span>
+                    <span>|</span>
+                    <span>회원가입</span>
+                </div>
+            </div>
+            <hr>
+            <nav>
+                <ul id="bar_header">
+                    <li><a href="#" name="all_product" value="main">전체상품</a>
+                        <ul id="sub_bar" value="sub">
+                            <li><a href="#">강아지사료</a></li>
+                            <li><a href="#">고양이사료</a></li>
+                            <li><a href="#">강아지간식</a></li>
+                            <li><a href="#">고양이간식</a></li>
+                            <li><a href="#">영양제</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" name="dog_food" value="main">강아지사료</a>
+                        <ul id="sub_bar" value="sub">
+                            <li><a href="#">건식사료</a></li>
+                            <li><a href="#">습식사료</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" name="cat_food" value="main">고양이사료</a>
+                        <ul id="sub_bar" value="sub">
+                            <li><a href="#">건식사료</a></li>
+                            <li><a href="#">습식사료</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" name="dog_snack" value="main">강아지간식</a>
+                        <ul id="sub_bar" value="sub">
+                            <li><a href="#">개껌</a></li>
+                            <li><a href="#">육포</a></li>
+                            <li><a href="#">수제간식</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" name="cat_snack" value="main">고양이간식</a>
+                        <ul id="sub_bar" value="sub">
+                            <li><a href="#">츄르</a></li>
+                            <li><a href="#">수제간식</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" name="vitamin" value="main">영양제</a>
+                        <ul id="sub_bar" value="sub">
+                            <li><a href="#">눈 영양제</a></li>
+                            <li><a href="#">피부 영양제</a></li>
+                            <li><a href="#">종합비타민</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <div id="header_img">
+                <img src="img/pet1.png" alt="#">
+                <img src="img/pet2.png" alt="#">
+                <img src="img/pet3.png" alt="#">
+            </div>
+        </div>
+
+        <a href="#top_header" id="scroll_up"><img src="img/up.png" title="위로가기" id="up"></a>
+
+        <div class="content">
+            <main>
+                <table id="which">
+                    <tr>
+                        <td><a href="#"><img src="img/dog.jpg" alt=""></a></td>
+                        <td><a href="#"><img src="img/cat.jpg" alt=""></a></td>
+                    </tr>
+                    <tr>
+                        <td>Dog</td>
+                        <td>Cat</td>
+                    </tr>
+                </table>
+            </main>
+            <section>
+                <article id="best">
+                    <h1 style="text-align: center;">BEST PRODUCT</h1>
+                    <table id="best_product">
+                        <tr>
+                            <td><a href="#"><img src="img/best1.jpg" alt="">딩고껌 강아지개껌 소고기 오리고기 대형견</a></td>
+                            <td><a href="#"><img src="img/best2.jpg" alt="">강아지,고양이겸용 스틱타입 30개</a></td>
+                            <td><a href="#"><img src="img/best3.jpg" alt="">강아지사료 기능성 간식 덴탈껌</a></td>
+                            <td><a href="#"><img src="img/best4.jpg" alt="">스낵볼 미트, 씨푸드, 베지 1+1행사</a></td>
+                        </tr>
+                    </table>
+                </article>
+                
+                <article id="new">
+                    <h1 style="text-align: center;">NEW PRODUCT</h1>
+                    <table id="new_product">
+                        <tr>
+                            <td><a href="#"><img src="img/new1.jpg" alt="" value="new">브리더랩 월간스틱 파티 40개입</a></td>
+                            <td><a href="#"><img src="img/new2.jpg" alt="" value="new">바우와우 혼합 간식 350g</a></td>
+                            <td><a href="#"><img src="img/new3.jpg" alt="" value="new">바우와우 치즈샌드 믹스 120g</a></td>
+                            <td><a href="#"><img src="img/new4.jpg" alt="" value="new">비스켓 고양이 간식 240g</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#"><img src="img/new5.jpg" alt="" value="new">캣츠 다이닝 슬라이스 20g 고양이 간식</a></td>
+                            <td><a href="#"><img src="img/new6.jpg" alt="" value="new">맛있는 큐브 강아지간식 200g</a></td>
+                            <td><a href="#"><img src="img/new7.jpg" alt="" value="new">닭고기 S 강철개껌</a></td>
+                            <td><a href="#"><img src="img/new8.jpg" alt="" value="new">소고기 S 강철개껌</a></td>
+                        </tr>
+                    </table>
+                </article>
+                <a href="#" class="more_view">more view +</a>
+            </section>
+        </div>
+        <footer>
+            <div id="footer">
+                <div id="footer_left">
+                    <ul>
+                        <li><h4>고객 지원센터</h4></li>
+                        <li><h4>TEL 012-1234-5678  FAX 012-1234-5678</h4></li>
+                        <li>평일 오전 10시부터 오후 7시까지 / 점심시간 12시부터 1시까지</li>
+                        <li>토요일 오전 10시부터 오후 3시까지</li>
+                        <li>일요일 휴무</li>						
+                    </ul>
+                </div>
+                <div id="footer_right">
+                    <ul>
+                        <li><h4>반품배송지<h4></li>
+                        <li>서강로 136 아이비타워 2층, 3층 마포구 서울특별시</li>
+                        <li>법인명:포플&nbsp 대표:임초원&nbsp 사업자등록번호:122-25-38890</li>
+                        <li>개인정보관리자:임초원&nbsp 주소:서울특별시 일번구 이번동</li>
+                        <li>대표번호:010-4643-8018&nbsp 메일:chowon3827@naver.com</li>			
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
